@@ -14,6 +14,7 @@ const db = mysql.createConnection({
 
 })
 
+app.use(express.urlencoded({ extended: true })); // For form data
 app.use(express.json());
 app.use(cors());
 
@@ -24,6 +25,19 @@ app.get("/", (req, res) => {
         }
         res.json(result);
     })
+})
+
+app.post("/add-user",  (req, res) => {
+    const { name, email } = req.body;
+    db.query("INSERT INTO users (name, email) VALUES (?, ?)", [name, email], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send("Error adding user");
+        } else {
+            res.status(201).send("User added successfully");
+        }
+    });
+
 })
 
 app.listen(port, () => {`Server started on port ${port}`});
