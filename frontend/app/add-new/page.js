@@ -9,7 +9,7 @@ export default function AddNewPage() {
     const formData = new FormData(event.target);
     
     try {
-      const response = await fetch('http://localhost:3001', {
+      const response = await fetch('http://localhost:3001/add-user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -22,9 +22,9 @@ export default function AddNewPage() {
 
       const result = await response.json();
       if (response.ok) {
-        setMessage('User added successfully!');
+        setMessage(result.message || 'User added successfully');
       } else {
-        setMessage(result.error || 'Failed to add user');
+        setMessage(result.message || 'Failed to add user');
       }
     } catch (error) {
       setMessage('Error: ' + error.message);

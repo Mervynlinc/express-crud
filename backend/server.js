@@ -32,12 +32,12 @@ app.post("/add-user",  (req, res) => {
     db.query("INSERT INTO users (name, email) VALUES (?, ?)", [name, email], (err, result) => {
         if (err) {
             console.error(err);
-            res.status(500).send("Error adding user");
+            res.status(500).json({message: "Error adding user"});
         } else {
-            res.status(201).send("User added successfully");
+            res.status(201).json({message: "User added successfully"});
         }
     });
 
 })
 
-app.listen(port, () => {`Server started on port ${port}`});
+app.listen(port, () => {console.log(`Server started on port ${port}`)});
